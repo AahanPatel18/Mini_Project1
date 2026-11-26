@@ -1,0 +1,367 @@
+/* Literal colour values follow the CSS lesson: purple #4f2683 and white #ffffff are primary.
+   Deep Focus #201335, grey #808080, orchid #9f5ff5, and black #000000 are secondary.
+   Layout rules retain the existing design under the assignment's HTML/CSS styling requirement. */
+
+/* Include padding and borders in declared element widths so controls fit inside their columns. */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #ffffff;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+/* The left 100px column holds the logo; an equal empty right column keeps the title centred. */
+.page-header {
+    display: grid;
+    grid-template-columns: 100px minmax(0, 1fr) 100px;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #4f2683;
+    color: #ffffff;
+    border-bottom: 4px solid #9f5ff5;
+    text-align: center;
+}
+
+/* Preserve the logo's proportions and keep its purple artwork visible against a white background. */
+.header-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
+}
+
+h1 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+}
+
+.page-header p {
+    margin: 0;
+}
+
+/* 1200px is a readability/design limit; auto side margins centre the content on wider screens. */
+main {
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 0 20px;
+}
+
+/* Shared panel appearance: margin separates panels, padding spaces their contents, and 8px rounds corners. */
+.panel {
+    margin-bottom: 24px;
+    padding: 20px;
+    border: 1px solid #808080;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* Two columns keep upload instructions beside the picker; smaller vertical padding makes this panel compact. */
+.upload-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: 16px 24px;
+    padding: 16px 20px;
+}
+
+.upload-panel h2 {
+    margin-bottom: 8px;
+}
+
+.upload-panel label {
+    margin-bottom: 0;
+}
+
+.upload-panel .help-text {
+    margin-top: 4px;
+}
+
+/* Messages span the entire upload grid. Wrap long filenames instead of widening the page. */
+#load-status,
+#error-message {
+    grid-column: 1 / -1;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+#error-message {
+    padding: 12px;
+    border: 1px solid #808080;
+    border-left: 4px solid #9f5ff5;
+    color: #201335;
+}
+
+h2 {
+    margin: 0 0 16px;
+    font-size: 1.3rem;
+    color: #4f2683;
+}
+
+h3 {
+    margin: 16px 0 12px;
+    font-size: 1.1rem;
+    color: #201335;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #201335;
+}
+
+input,
+select,
+button {
+    font: inherit;
+}
+
+input[type="file"] {
+    display: block;
+    max-width: 100%;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 8px 12px;
+    margin-right: 12px;
+    border: 1px solid #4f2683;
+    border-radius: 4px;
+    background-color: #4f2683;
+    color: #ffffff;
+    font: inherit;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+    border-color: #201335;
+    background-color: #201335;
+}
+
+/* rem sizes scale with the browser's root font: secondary text uses 0.9rem, course titles use 1.1rem. */
+.help-text,
+.course-meta {
+    color: #201335;
+    font-size: 0.9rem;
+}
+
+.help-text {
+    margin: 8px 0 0;
+}
+
+/* Four equal columns match the four filter controls; media queries reduce the column count below. */
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #808080;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #201335;
+}
+
+/* The details panel gets 1.2 shares of space for every 1 share given to the list; the 24px gap is separate.
+   align-items: start keeps the shorter panel at its content height, allowing sticky positioning to work. */
+.courses-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    align-items: start;
+    gap: 24px;
+}
+
+/* Keep sorting beside the course heading and allow it to wrap when the available width is limited. */
+.courses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.courses-header h2 {
+    margin: 0;
+}
+
+.sort-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.sort-control label {
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.sort-control select {
+    width: auto;
+    min-width: 0;
+}
+
+.course-list {
+    display: grid;
+    gap: 12px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Avoid an empty list's grid/margin taking up space before a file is loaded or when no courses match. */
+.course-list:empty {
+    display: none;
+}
+
+.course-item {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #808080;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: left;
+    cursor: pointer;
+}
+
+.course-item span {
+    display: block;
+}
+
+/* Override the block spans above so the Selected badge sits beside the course code. */
+.course-item .selected-label {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #4f2683;
+    font-size: 0.75rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.course-code {
+    margin: 0;
+    color: #4f2683;
+    font-weight: bold;
+}
+
+.course-title {
+    margin: 4px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.course-item:hover {
+    border-color: #9f5ff5;
+}
+
+/* Selection is conveyed through purple highlighting and the visible badge created by app.js. */
+.course-item.selected {
+    border: 2px solid #9f5ff5;
+    background-color: #4f2683;
+    color: #ffffff;
+}
+
+/* Keep codes and metadata readable on the selected row's purple background. */
+.course-item.selected .course-code,
+.course-item.selected .course-meta {
+    color: #ffffff;
+}
+
+/* A 3px outline with a 3px offset makes keyboard focus visible without changing element size. */
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+    outline: 3px solid #9f5ff5;
+    outline-offset: 3px;
+}
+
+/* Course fact labels use 110px; values take the remaining space and can shrink within the panel. */
+.details-list {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 12px 16px;
+    margin: 24px 0;
+    padding: 20px 0;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+}
+
+dt {
+    font-weight: bold;
+    color: #201335;
+}
+
+dd {
+    margin: 0;
+}
+
+#detail-description {
+    margin-bottom: 0;
+}
+
+/* From 701px, keep details 20px below the viewport top while scrolling within the courses grid. */
+@media (min-width: 701px) {
+    #course-details {
+        position: sticky;
+        top: 20px;
+    }
+}
+
+/* Layout breakpoints are design choices: four filters become two columns at 1000px or less. */
+@media (max-width: 1000px) {
+    .filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* At 700px or less, use a smaller 72px logo and stack the filters, upload controls, panels, and facts. */
+@media (max-width: 700px) {
+    .page-header {
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 16px;
+        padding: 16px;
+        text-align: left;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .courses-layout,
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 20px;
+    }
+
+    .upload-panel {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .details-list {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    dd {
+        margin-bottom: 12px;
+    }
+}

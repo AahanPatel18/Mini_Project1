@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="page-header">
+        <!-- Local logo asset; include the assets folder with the submitted page. -->
+        <img class="header-logo" src="assets/western-logo.svg" alt="Western University logo"
+            width="100" height="100">
+        <div class="header-text">
+            <h1>Course Explorer</h1>
+            <p>Explore courses and view their details in one place.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="panel upload-panel" aria-labelledby="upload-heading">
+            <div class="upload-instructions">
+                <h2 id="upload-heading">Load courses</h2>
+                <label for="course-file">Choose a course data file (JSON)</label>
+                <p id="file-help" class="help-text">Select the courses.json file from your computer.</p>
+            </div>
+
+            <!-- accept guides the picker; app.js still parses and validates the selected file's contents. -->
+            <input type="file" id="course-file" name="course-file" accept=".json,application/json"
+                aria-describedby="file-help">
+            <!-- JavaScript reveals these messages as needed; their roles announce feedback to screen readers. -->
+            <p id="load-status" class="help-text" role="status" hidden></p>
+            <p id="error-message" role="alert" hidden></p>
+        </section>
+
+        <section class="panel" aria-labelledby="filters-heading">
+            <h2 id="filters-heading">Filter courses</h2>
+            <!-- Empty option values mean All. JavaScript adds unique choices from the uploaded data.
+                 Filters stay disabled until a file supplies courses to filter. -->
+            <form id="course-controls" class="filter-grid">
+                <div class="form-field">
+                    <label for="department-filter">Department</label>
+                    <select id="department-filter" name="department" disabled>
+                        <option value="">All departments</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="level-filter">Level</label>
+                    <select id="level-filter" name="level" disabled>
+                        <option value="">All levels</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="credits-filter">Credits</label>
+                    <select id="credits-filter" name="credits" disabled>
+                        <option value="">All credits</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="semester-filter">Semester</label>
+                    <select id="semester-filter" name="semester" disabled>
+                        <option value="">All semesters</option>
+                    </select>
+                </div>
+            </form>
+        </section>
+
+        <div class="courses-layout">
+            <section class="panel" aria-labelledby="courses-heading">
+                <div class="courses-header">
+                    <div>
+                        <h2 id="courses-heading">Courses</h2>
+                        <!-- Announce updated result counts without moving keyboard focus. -->
+                        <p id="course-count" class="help-text" aria-live="polite" aria-atomic="true">0 courses</p>
+                    </div>
+
+                    <!-- Sort values match the code's modes; None (empty value) restores upload order. -->
+                    <div class="sort-control">
+                        <label for="sort-by">Sort by</label>
+                        <select id="sort-by" name="sort-by" disabled>
+                            <option value="">None</option>
+                            <option value="title">Title (A–Z)</option>
+                            <option value="id">Course ID (A–Z)</option>
+                            <option value="semester">Semester (earliest first)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <p id="course-empty" class="help-text">Select a JSON file above to load courses.</p>
+                <!-- JavaScript builds the list entries after upload; aria-busy marks an in-progress file read. -->
+                <ul id="course-list" class="course-list" aria-busy="false"></ul>
+            </section>
+
+            <section id="course-details" class="panel" aria-labelledby="details-heading">
+                <h2 id="details-heading">Course details</h2>
+                <p id="details-placeholder" class="help-text">No course selected.</p>
+                <!-- The selected course fills these IDs through the mapping in app.js.
+                     Hide the content and show the placeholder when there is no selected result. -->
+                <div id="details-content" hidden>
+                    <p id="detail-id" class="course-code"></p>
+                    <h3 id="detail-title"></h3>
+
+                    <dl class="details-list">
+                        <dt>Department</dt>
+                        <dd id="detail-department"></dd>
+                        <dt>Level</dt>
+                        <dd id="detail-level"></dd>
+                        <dt>Credits</dt>
+                        <dd id="detail-credits"></dd>
+                        <dt>Instructor</dt>
+                        <dd id="detail-instructor"></dd>
+                        <dt>Semester</dt>
+                        <dd id="detail-semester"></dd>
+                    </dl>
+
+                    <h3>Description</h3>
+                    <p id="detail-description"></p>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Load scripts after the page elements, as in the DOM tutorial; define Course before using it. -->
+    <script src="course.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
